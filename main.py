@@ -2,7 +2,7 @@ import numpy as np
 
 
 def generate_time_series(length):
-    return np.random.normal(10, 5, length)
+    return np.random.normal(10, 1, length)
 
 
 def compute_mean(time_series, window_length):
