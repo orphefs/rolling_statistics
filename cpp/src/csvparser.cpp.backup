@@ -1,0 +1,72 @@
+#include "csvparser.h"
+#include "logger.h"
+#include "boost/algorithm/string.hpp"
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+
+
+
+Segment readWifiLog(std::string const t_filePath)
+{
+    std::ifstream infile = openStream(t_filePath);
+    std::string line;
+    std::vector<std::string> lineTokens;
+    std::vector<Timestamp> timestamps;
+
+    while (std::getline(infile, line))
+    {
+        std::vector<Scan> scans;
+        boost::split(lineTokens, line, boost::is_any_of(","));
+        int nIterations = lineTokens.size() - 1;
+        for (int i = 3; i < nIterations; i += 2)
+        {
+            Scan scan(lineTokens[i], std::stoi(lineTokens[i + 1]));
+            // std::cout << scan << std::endl;
+            scans.push_back(scan);
+        }
+        std::set<Scan> scanSet(scans.begin(), scans.end());
+        Timestamp timestamp(scanSet);
+        timestamp.extractSortedSsidVector();
+        // std::cout << "\n New scan collection: " << timestamp << std::endl;
+        timestamps.push_back(timestamp);
+    }
+    infile.close();
+
+    return Segment(timestamps);
+}
+
+std::vector<std::string> parseFileList(std::string const t_filePath)
+{
+    std::ifstream infile = openStream(t_filePath);
+    std::string line;
+    std::vector<std::string> lineTokens;
+    std::vector<std::string> pathsToFiles;
+
+    while (std::getline(infile, line))
+    {
+        pathsToFiles.push_back(line);
+    }
+    infile.close();
+
+    return pathsToFiles;
+}
+
+
+std::ifstream openStream(std::string const t_filePath)
+{
+    std::ifstream infile(t_filePath);
+    if (!infile.is_open())
+    {
+        LOG("Failed to open file " + t_filePath + "\n");
+    }
+    else
+    {
+        LOG("Opened file" + t_filePath + "\n");
+    }
+
+    return infile;
+}
