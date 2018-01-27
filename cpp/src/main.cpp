@@ -13,15 +13,15 @@ int main()
 
     RollingMean myRollingMean(std::size_t{4});
     myRollingMean.insertSample(1.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;    
+    // std::cout << myRollingMean.getRollingMean() << std::endl;    
     myRollingMean.insertSample(2.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;
+    // std::cout << myRollingMean.getRollingMean() << std::endl;
     myRollingMean.insertSample(3.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;    
+    // std::cout << myRollingMean.getRollingMean() << std::endl;    
     myRollingMean.insertSample(4.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;
+    // std::cout << myRollingMean.getRollingMean() << std::endl;
     myRollingMean.insertSample(5.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;
+    // std::cout << myRollingMean.getRollingMean() << std::endl;
     myRollingMean.insertSample(6.0);
     std::cout << myRollingMean.getRollingMean() << std::endl;
     
