@@ -6,6 +6,7 @@ class RollingMean
   public:
     RollingMean(std::size_t windowSize_t);
     void insertSample(float const &sample_t);
+    std::size_t getSize() const { return m_samples.size(); };
     float &operator[](int i) { return m_samples[i]; };
 
   private:
