@@ -23,7 +23,7 @@ int main()
     myRollingMean.insertSample(5.0);
     // std::cout << myRollingMean.getRollingMean() << std::endl;
     myRollingMean.insertSample(6.0);
-    std::cout << myRollingMean.getRollingMean() << std::endl;
+    // std::cout << myRollingMean.getRollingMean() << std::endl;
     
     
     
