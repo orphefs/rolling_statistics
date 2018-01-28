@@ -10,19 +10,17 @@ void RollingMean::insertSample(float const &sample_t)
 {
     m_newSample = sample_t;
     selectMode();
-    std::cout << static_cast<std::underlying_type<Mode>::type>(m_mode) << std::endl;
+    // std::cout << static_cast<std::underlying_type<Mode>::type>(m_mode) << std::endl;
     switch (m_mode)
     {
     case Mode::CUMULATIVE:
         m_samples.push_back(sample_t);
-        std::cout << "CUMULATIVE" << std::endl;
         break;
         
     case Mode::ROLLING:
         m_samples.push_back(sample_t);
         m_oldSample = m_samples[0];
         m_samples.pop_front();
-        std::cout << "ROLLING" << std::endl;
         break;
         
     default:
@@ -51,9 +49,7 @@ void RollingMean::selectMode()
     else
     {
         m_mode = Mode::ROLLING;
-        
     }
-    // std::cout << "is cumulative: " << m_isCumulativeMode << std::endl;
 }
 
 void RollingMean::updateState()
@@ -63,9 +59,11 @@ void RollingMean::updateState()
     case Mode::CUMULATIVE:
         m_newMean = RollingMean::computeMean(m_samples);
         std::cout << "New Mean: " << m_newMean << std::endl;
+        break;
     case Mode::ROLLING:
         m_newMean = m_oldMean + (m_newSample / m_windowSize) - (m_oldSample / m_windowSize);
         std::cout << "New Mean: " << m_newMean << "=" << m_oldMean << "+" << m_newSample << "/" << m_windowSize << "-" << m_oldSample << "/" << m_windowSize << std::endl;
+        break;
     default:
         break;
     }
