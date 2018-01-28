@@ -16,13 +16,11 @@ void RollingMean::insertSample(float const &sample_t)
     case Mode::CUMULATIVE:
         m_samples.push_back(sample_t);
         break;
-        
     case Mode::ROLLING:
         m_samples.push_back(sample_t);
         m_oldSample = m_samples[0];
         m_samples.pop_front();
         break;
-        
     default:
         break;
     }
@@ -32,7 +30,6 @@ void RollingMean::insertSample(float const &sample_t)
 float RollingMean::computeMean(std::deque<float> const &m_samples)
 {
     float mean(0.0);
-
     for (auto it = m_samples.begin(); it != m_samples.end(); ++it)
     {
         mean += *it * (1.0 / m_samples.size());
@@ -58,11 +55,9 @@ void RollingMean::updateState()
     {
     case Mode::CUMULATIVE:
         m_newMean = RollingMean::computeMean(m_samples);
-        std::cout << "New Mean: " << m_newMean << std::endl;
         break;
     case Mode::ROLLING:
         m_newMean = m_oldMean + (m_newSample / m_windowSize) - (m_oldSample / m_windowSize);
-        std::cout << "New Mean: " << m_newMean << "=" << m_oldMean << "+" << m_newSample << "/" << m_windowSize << "-" << m_oldSample << "/" << m_windowSize << std::endl;
         break;
     default:
         break;
