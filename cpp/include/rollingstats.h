@@ -10,7 +10,7 @@ enum class Mode
 class RollingMean
 {
   public:
-    RollingMean(std::size_t windowSize_t);
+    explicit RollingMean(std::size_t windowSize_t);
     static float computeMean(std::deque<float> const &m_samples);
     void insertSample(float const &sample_t);
     float getRollingMean() const { return m_newMean; };

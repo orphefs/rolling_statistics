@@ -31,7 +31,7 @@ void computeRollingStats(std::string const t_readfilePath, std::string const t_w
     std::vector<std::string> lineTokens;
     std::ofstream m_loggingStream;
     m_loggingStream.open(t_writeFilePath, std::ofstream::out | std::ofstream::trunc);
-    RollingMean myRollingMean(std::size_t{4});
+    RollingMean myRollingMean(std::size_t{1000});
     while (std::getline(infile, line))
     {
         boost::split(lineTokens, line, boost::is_any_of(","));
