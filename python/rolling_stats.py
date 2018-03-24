@@ -20,20 +20,11 @@ class RollingMean:
         if self._data.qsize() < self._data.maxsize:
             self._mode = 'cumulative'
             self._data.put(sample, block=False)
-            print(self._data.qsize())
         else:
             self._mode = 'rolling'
             self._old_sample = self._data.get()
             self._data.put(sample, block=False)
-            print(self._data.qsize())
         self._update_state()
-
-    def _select_mode(self):
-        if self._data.full():
-            self._mode = 'rolling'
-        else:
-            self._mode = 'cumulative'
-            print(self._mode)
 
     def _compute_mean(self):
         self._new_mean = np.mean(list(self._data.queue))
@@ -53,8 +44,9 @@ class RollingMean:
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
+
     rm = RollingMean(10)
-    raw_data = np.arange(0,100) + np.random.normal(0,20,100)
+    raw_data = np.arange(0, 100) + np.random.normal(0, 20, 100)
     means = []
     for item in raw_data:
         rm.insert_new_sample(item)
